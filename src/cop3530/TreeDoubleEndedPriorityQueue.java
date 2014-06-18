@@ -20,11 +20,13 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
 
     public TreeDoubleEndedPriorityQueue()
     {
+        this( null );
     }
 
-    public TreeDoubleEndedPriorityQueue( Comparator<? super AnyType> cmp )
+    public TreeDoubleEndedPriorityQueue( Comparator<? super AnyType> c )
     {
-        throw new UnsupportedOperationException( "Not supported yet." );
+        cmp = c;
+        root = null;
     }
 
     @Override
@@ -46,45 +48,90 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         root = null;
     }
 
+    private int myCompare( AnyType x, AnyType y )
+    {
+        if ( cmp == null )
+        {
+            return ( (Comparable) x ).compareTo( y );
+        }
+        return cmp.compare( x, y );
+    }
+
     @Override
     public void add( AnyType x )
     {
-        throw new UnsupportedOperationException( "Not supported yet." );
+        root = add( x, root );
+    }
+
+    private Node<AnyType> add( AnyType x, Node<AnyType> t )
+    {
+        if ( t == null )
+        {
+            return new Node<>( x );
+        }
+        else
+        {
+            int compareCheck = myCompare( x, t.items.data );
+            if ( compareCheck < 0 )
+            {
+                t.left = add(x, t.left);
+            }
+            else if (compareCheck > 0)
+            {
+                t.right = add(x, t.right);
+            }
+            else 
+            {
+                if(x == t.items.data)
+                {
+                    t.items = new Node.ListNode<>(x, t.items);
+                }
+            }
+        }
+        return t;
     }
 
     @Override
     public AnyType deleteMin()
     {
-        if(isEmpty())
-            throw new UnderflowException("Its empty!");
-        
+        if ( isEmpty() )
+        {
+            throw new UnderflowException( "Its empty!" );
+        }
+
         throw new UnsupportedOperationException( "Not supported yet." );
     }
 
     @Override
     public AnyType deleteMax()
     {
-        if(isEmpty())
-            throw new UnderflowException("Its empty!");
-        
+        if ( isEmpty() )
+        {
+            throw new UnderflowException( "Its empty!" );
+        }
+
         throw new UnsupportedOperationException( "Not supported yet." );
     }
 
     @Override
     public AnyType findMin()
     {
-        if(isEmpty())
-            throw new UnderflowException("Its empty!");
-        
+        if ( isEmpty() )
+        {
+            throw new UnderflowException( "Its empty!" );
+        }
+
         throw new UnsupportedOperationException( "Not supported yet." );
     }
 
     @Override
     public AnyType findMax()
     {
-        if(isEmpty())
-            throw new UnderflowException("Its empty!");
-        
+        if ( isEmpty() )
+        {
+            throw new UnderflowException( "Its empty!" );
+        }
+
         throw new UnsupportedOperationException( "Not supported yet." );
     }
 
@@ -109,6 +156,7 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
 
         private static class ListNode<AnyType>
         {
+
             private AnyType data;
             private ListNode<AnyType> next;
 

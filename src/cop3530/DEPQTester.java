@@ -108,13 +108,13 @@ class DEPQTester
     {
         long start = System.currentTimeMillis();
 
-        test1( new ListDoubleEndedPriorityQueue() );
-        test2( new ListDoubleEndedPriorityQueue( String.CASE_INSENSITIVE_ORDER ) );
-        test3( new ListDoubleEndedPriorityQueue(), 1787, 2357 );
-        test4( new ListDoubleEndedPriorityQueue(), 211, 101 );
-        test5( new ListDoubleEndedPriorityQueue(), 1787, 2357 );
-//
-//        test1( new TreeDoubleEndedPriorityQueue() );
+//        test1( new ListDoubleEndedPriorityQueue() );
+//        test2( new ListDoubleEndedPriorityQueue( String.CASE_INSENSITIVE_ORDER ) );
+//        test3( new ListDoubleEndedPriorityQueue(), 1787, 2357 );
+//        test4( new ListDoubleEndedPriorityQueue(), 211, 101 );
+//        test5( new ListDoubleEndedPriorityQueue(), 1787, 2357 );
+
+        test1( new TreeDoubleEndedPriorityQueue() );
 //        test2( new TreeDoubleEndedPriorityQueue( String.CASE_INSENSITIVE_ORDER ) );
 //        test3( new TreeDoubleEndedPriorityQueue(), 155579, 234589 );
 //        test4( new TreeDoubleEndedPriorityQueue(), 1423, 1009 );

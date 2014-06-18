@@ -62,7 +62,7 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
     {
         if ( isEmpty() )
             first = last = new Node<>( x, null, null );
-        else if ( first == last )
+        else if ( first == last && ((first != null)&&(last!=null)))
         {
             int compareCheck = myCompare( first.data, x );
             if ( compareCheck >= 0 )
@@ -112,7 +112,7 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         {
             throw new UnderflowException( "Its empty!" );
         }
-        else if ( first == last )
+        else if ( first == last  && ((first != null)&&(last!=null)) )
         {
             AnyType rem = first.data;
             makeEmpty();
@@ -134,7 +134,7 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         {
             throw new UnderflowException( "Its empty!" );
         }
-        else if ( first == last )
+        else if ( first == last  && ((first != null)&&(last!=null)) )
         {
             AnyType rem = last.data;
             makeEmpty();
