@@ -53,9 +53,7 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
     private int myCompare( AnyType x, AnyType y )
     {
         if ( cmp == null )
-        {
             return ( (Comparable) x ).compareTo( y );
-        }
         return cmp.compare( x, y );
     }
 
@@ -63,31 +61,21 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
     public void add( AnyType x )
     {
         if ( isEmpty() )
-        {
             first = last = new Node<>( x, null, null );
-        }
         else if ( first == last )
         {
             int compareCheck = myCompare( first.data, x );
             if ( compareCheck >= 0 )
-            {
                 addFirst( x );
-            }
             else if ( compareCheck <= 0 )
-            {
                 addLast( x );
-            }
         }
         else
         {
             if ( myCompare( first.data, x ) >= 0 )
-            {
                 addFirst( x );
-            }
             else if ( myCompare( last.data, x ) <= 0 )
-            {
                 addLast( x );
-            }
             else
             {
                 Node<AnyType> p = first.next;
