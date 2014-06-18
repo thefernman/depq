@@ -188,6 +188,6 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             data = d;
             prev = p;
             next = n;
-        }
+        } 
     }
 }
