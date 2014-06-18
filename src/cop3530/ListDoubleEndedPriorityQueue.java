@@ -13,43 +13,43 @@ import java.util.Comparator;
  */
 public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorityQueue<AnyType>
 {
-    
+
     private Comparator<? super AnyType> cmp;
     private Node<AnyType> first;
     private Node<AnyType> last;
-    
+
     public ListDoubleEndedPriorityQueue()
     {
         this( null );
     }
-    
+
     public ListDoubleEndedPriorityQueue( Comparator<? super AnyType> c )
     {
         first = last = null;
         cmp = c;
     }
-    
+
     @Override
     public String toString()
     {
         StringBuilder sb = new StringBuilder( "[ " );
-        
+
         for ( Node<AnyType> p = first; p != null; p = p.next )
         {
             sb.append( p.data );
             sb.append( " " );
         }
         sb.append( "]" );
-        
+
         return new String( sb );
     }
-    
+
     @Override
     public void makeEmpty()
     {
         first = last = null;
     }
-    
+
     private int myCompare( AnyType x, AnyType y )
     {
         if ( cmp == null )
@@ -58,7 +58,7 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         }
         return cmp.compare( x, y );
     }
-    
+
     @Override
     public void add( AnyType x )
     {
@@ -71,26 +71,22 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             int compareCheck = myCompare( first.data, x );
             if ( compareCheck >= 0 )
             {
-                first = new Node<>( x, null, first );
-                first.next.prev = first;
+                addFirst( x );
             }
             else if ( compareCheck <= 0 )
             {
-                last = new Node( x, first, null );
-                last.prev.next = last;
+                addLast( x );
             }
         }
         else
         {
             if ( myCompare( first.data, x ) >= 0 )
             {
-                first = new Node<>( x, null, first );
-                first.next.prev = first;
+                addFirst( x );
             }
             else if ( myCompare( last.data, x ) <= 0 )
             {
-                last = new Node( x, last, null );
-                last.prev.next = last;
+                addLast( x );
             }
             else
             {
@@ -105,7 +101,19 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             }
         }
     }
-    
+
+    private void addFirst( AnyType x )
+    {
+        first = new Node<>( x, null, first );
+        first.next.prev = first;
+    }
+
+    private void addLast( AnyType x )
+    {
+        last = new Node( x, last, null );
+        last.prev.next = last;
+    }
+
     @Override
     public AnyType deleteMin()
     {
@@ -127,7 +135,7 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             return rem;
         }
     }
-    
+
     @Override
     public AnyType deleteMax()
     {
@@ -149,7 +157,7 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             return rem;
         }
     }
-    
+
     @Override
     public AnyType findMin()
     {
@@ -159,7 +167,7 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         }
         return first.data;
     }
-    
+
     @Override
     public AnyType findMax()
     {
@@ -169,25 +177,25 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         }
         return last.data;
     }
-    
+
     @Override
     public boolean isEmpty()
     {
         return first == null && last == null;
     }
-    
+
     private static class Node<AnyType>
     {
-        
+
         private AnyType data;
         private Node<AnyType> prev;
         private Node<AnyType> next;
-        
+
         public Node( AnyType d, Node<AnyType> p, Node<AnyType> n )
         {
             data = d;
             prev = p;
             next = n;
-        } 
+        }
     }
 }
