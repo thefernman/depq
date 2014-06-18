@@ -92,12 +92,8 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             {
                 Node<AnyType> p = first.next;
                 while ( myCompare( x, p.data ) > 0 )
-                {
                     p = p.next;
-                }
-                p = new Node<>( x, p.prev, p );
-                p.prev.next = p;
-                p.next.prev = p;
+                addAfter( p, x );
             }
         }
     }
@@ -112,6 +108,13 @@ public class ListDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
     {
         last = new Node( x, last, null );
         last.prev.next = last;
+    }
+
+    private void addAfter( Node<AnyType> p, AnyType x )
+    {
+        p = new Node<>( x, p.prev, p );
+        p.prev.next = p;
+        p.next.prev = p;
     }
 
     @Override
