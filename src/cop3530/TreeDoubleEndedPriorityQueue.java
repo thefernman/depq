@@ -39,7 +39,13 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
 
     private void toString( Node<AnyType> t, StringBuilder sb )
     {
-
+        if ( t != null )
+        {
+            toString( t.left, sb );
+            sb.append( t.items );
+            sb.append( " " );
+            toString( t.right, sb );
+        }
     }
 
     @Override
@@ -74,18 +80,15 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             int compareCheck = myCompare( x, t.items.data );
             if ( compareCheck < 0 )
             {
-                t.left = add(x, t.left);
+                t.left = add( x, t.left );
             }
-            else if (compareCheck > 0)
+            else if ( compareCheck > 0 )
             {
-                t.right = add(x, t.right);
+                t.right = add( x, t.right );
             }
-            else 
+            else if ( compareCheck == 0 )
             {
-                if(x == t.items.data)
-                {
-                    t.items = new Node.ListNode<>(x, t.items);
-                }
+                t.items = new Node.ListNode<>( x, t.items );
             }
         }
         return t;
@@ -98,8 +101,8 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         {
             throw new UnderflowException( "Its empty!" );
         }
-
         throw new UnsupportedOperationException( "Not supported yet." );
+
     }
 
     @Override
@@ -164,6 +167,19 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             {
                 data = d;
                 next = n;
+            }
+
+            @Override
+            public String toString()
+            {
+                StringBuilder sb = new StringBuilder();
+
+                for ( ListNode<AnyType> p = this; p != null; p = p.next )
+                {
+                    sb.append( p.data );
+                    sb.append( " " );
+                }
+                return new String( sb );
             }
         }
     }
