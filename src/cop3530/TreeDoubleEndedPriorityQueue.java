@@ -5,15 +5,18 @@
  */
 package cop3530;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
  * @author Fernando
  * @param <AnyType>
  */
-public class TreeDoubleEndedPriorityQueue<AnyType> 
-                                implements DoubleEndedPriorityQueue<AnyType>
+public class TreeDoubleEndedPriorityQueue<AnyType>
+        implements DoubleEndedPriorityQueue<AnyType>
 {
 
     private Comparator<? super AnyType> cmp;
@@ -44,7 +47,6 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
         {
             toString( t.left, sb );
             sb.append( t.items );
-            sb.append( " " );
             toString( t.right, sb );
         }
     }
@@ -99,24 +101,91 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
         {
             throw new UnderflowException( "Its empty!" );
         }
-        return deleteMin( root );
+        if ( root.left == null ) //root has no left
+        {
+            if ( !root.hasMoreLinks() )//one link
+            {
+                AnyType rem = root.items.data;
+                root = root.right;
+                return rem;
+            }
+            else//more links
+            {
+                return root.removeLink();
+            }
+        }
+        else //root has left
+        {
+            return deleteMin( root );
+        }
     }
 
     private AnyType deleteMin( Node<AnyType> t )
     {
-        if(t.left == null)
-        throw new UnsupportedOperationException( "Not supported yet." );
+        if ( t.left.left == null )//t.left has no left
+        {
+            if ( !t.left.hasMoreLinks() )//one link
+            {
+                AnyType rem = t.left.items.data;
+                t.left = t.left.right;
+                return rem;
+            }
+            else//more links
+            {
+                return t.left.removeLink();
+            }
+        }
+        else
+        {
+            return deleteMin( t.left );
+        }
     }
 
     @Override
     public AnyType deleteMax()
     {
-        if ( isEmpty() )
+        if ( isEmpty() )//empty tree
         {
             throw new UnderflowException( "Its empty!" );
         }
+        if ( root.right == null ) //root has no left
+        {
+            if ( !root.hasMoreLinks() )//one link
+            {
+                AnyType rem = root.items.data;
+                root = root.left;
+                return rem;
+            }
+            else//more links
+            {
+                return root.removeLink();
+            }
+        }
+        else //root has left
+        {
+            return deleteMax( root );
+        }
+    }
 
-        throw new UnsupportedOperationException( "Not supported yet." );
+    private AnyType deleteMax( Node<AnyType> t )
+    {
+        if ( t.right.right == null )//t.left has no left
+        {
+            if ( !t.right.hasMoreLinks() )//one link
+            {
+                AnyType rem = t.right.items.data;
+                t.right = t.right.left;
+                return rem;
+            }
+            else//more links
+            {
+                return t.right.removeLink();
+            }
+        }
+        else
+        {
+            return deleteMax( t.right );
+        }
     }
 
     @Override
@@ -181,19 +250,18 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
             left = right = null;
             items = new ListNode<>( data, null );
         }
-        
-        public AnyType removeLink (Node<AnyType> p)
+
+        public boolean hasMoreLinks()
         {
-            if(items.next != null)
-            {
-                ListNode<AnyType> rem = items;
-                items = items.next;
-                rem.next = null;
-                return rem.data;
-            }
-            
+            return items.next != null;
         }
-        
+
+        public AnyType removeLink()
+        {
+            items = items.next;
+            return items.data;
+        }
+
         private static class ListNode<AnyType>
         {
 
@@ -218,6 +286,56 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
                 }
                 return new String( sb );
             }
-        }
+        }//end of ListNode class
+    }//end of Node class
+
+    private static void test1( TreeDoubleEndedPriorityQueue<String> q1 )
+    {
+        q1.add( "Afdc" );
+        q1.add( "fda" );
+        q1.add( "Da" );
+        q1.add( "afdc" );
+        q1.add( "Fda" );
+        q1.add( "Da" );
+        System.out.println( "1 Before - q1: " + q1 );
+        System.out.println( "2 After - q1: " + q1 );
+        q1.deleteMin();
+        System.out.println( "3 After - q1: " + q1 );
+        q1.deleteMin();
+        q1.deleteMin();
+//        q1.deleteMin();
+        q1.deleteMax();
+        System.out.println( "4 After - q1: " + q1 );
     }
-}
+
+    private static void test2( TreeDoubleEndedPriorityQueue<Integer> q1 )
+    {
+        Random r = new Random( 1 );
+        for ( int i = 0; i < 10; ++i )
+        {
+            q1.add( r.nextInt( 20 ) );
+        }
+
+        System.out.println( "1 Before - q1: " + q1 );
+
+        int num = q1.deleteMin();
+        System.out.println( "Deleted " + num );
+        
+        System.out.println( "2 After - q1: " + q1 );
+        
+        num = q1.deleteMin();
+        System.out.println( "Deleted " + num );
+        
+        System.out.println( "3 After - q1: " + q1 );
+        
+        num = q1.deleteMin();
+        System.out.println( "Deleted " + num );
+        
+        System.out.println( "4 After - q1: " + q1 );
+    }
+
+    public static void main( String[] args )
+    {
+        test2( new TreeDoubleEndedPriorityQueue<>() );
+    }
+}//end of TreeDoubleEndedPriorityQueue class
