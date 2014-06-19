@@ -12,7 +12,8 @@ import java.util.Comparator;
  * @author Fernando
  * @param <AnyType>
  */
-public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorityQueue<AnyType>
+public class TreeDoubleEndedPriorityQueue<AnyType> 
+                                implements DoubleEndedPriorityQueue<AnyType>
 {
 
     private Comparator<? super AnyType> cmp;
@@ -98,30 +99,13 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         {
             throw new UnderflowException( "Its empty!" );
         }
-        else if (root.left ==null)//root only
-        {
-            AnyType rem = root.items.data;
-            if(root.items.next==null)//only one link
-            {
-                root = null;
-                return rem;
-            }
-            else //more links
-            {
-                root.items = root.items.next;
-                return rem;
-            }
-        }
-        else //root has left
-        {
-            return deleteMin(root);
-        }
-
+        return deleteMin( root );
     }
 
     private AnyType deleteMin( Node<AnyType> t )
     {
-        
+        if(t.left == null)
+        throw new UnsupportedOperationException( "Not supported yet." );
     }
 
     @Override
@@ -197,7 +181,19 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
             left = right = null;
             items = new ListNode<>( data, null );
         }
-
+        
+        public AnyType removeLink (Node<AnyType> p)
+        {
+            if(items.next != null)
+            {
+                ListNode<AnyType> rem = items;
+                items = items.next;
+                rem.next = null;
+                return rem.data;
+            }
+            
+        }
+        
         private static class ListNode<AnyType>
         {
 
