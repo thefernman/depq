@@ -94,47 +94,34 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
     @Override
     public AnyType deleteMin()
     {
-        if ( isEmpty() )
+        if ( isEmpty() )//empty tree
         {
             throw new UnderflowException( "Its empty!" );
         }
-        else if (root.left ==null)
+        else if (root.left ==null)//root only
         {
             AnyType rem = root.items.data;
-            if(root.items.next==null)
+            if(root.items.next==null)//only one link
             {
                 root = null;
+                return rem;
             }
-            else
+            else //more links
             {
                 root.items = root.items.next;
+                return rem;
             }
+        }
+        else //root has left
+        {
+            return deleteMin(root);
         }
 
     }
 
     private AnyType deleteMin( Node<AnyType> t )
     {
-        if ( t.left == null )//root only
-        {
-            Node.ListNode<AnyType> rem = t.items;
-            if ( rem.next == null )//sinlge link
-            {
-//                t=null;
-                return rem.data;
-            }
-            else //more links
-            {
-                t.items = t.items.next;
-                rem.next = null;
-                return rem.data;
-            }
-
-        }
-        else //root has left
-        {
-            return deleteMin( t.left );
-        }
+        
     }
 
     @Override
