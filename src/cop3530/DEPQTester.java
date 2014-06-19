@@ -116,7 +116,7 @@ class DEPQTester
 
         test1( new TreeDoubleEndedPriorityQueue() );
         test2( new TreeDoubleEndedPriorityQueue( String.CASE_INSENSITIVE_ORDER ) );
-//        test3( new TreeDoubleEndedPriorityQueue(), 155579, 234589 );
+        test3( new TreeDoubleEndedPriorityQueue(), 155579, 234589 );
 //        test4( new TreeDoubleEndedPriorityQueue(), 1423, 1009 );
 //        test5( new TreeDoubleEndedPriorityQueue(), 155579, 234589 );
 

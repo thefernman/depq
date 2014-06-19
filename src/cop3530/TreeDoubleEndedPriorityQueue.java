@@ -75,21 +75,18 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         {
             return new Node<>( x );
         }
-        else
+        int compareCheck = myCompare( x, t.items.data );
+        if ( compareCheck < 0 )
         {
-            int compareCheck = myCompare( x, t.items.data );
-            if ( compareCheck < 0 )
-            {
-                t.left = add( x, t.left );
-            }
-            else if ( compareCheck > 0 )
-            {
-                t.right = add( x, t.right );
-            }
-            else if ( compareCheck == 0 )
-            {
-                t.items = new Node.ListNode<>( x, t.items );
-            }
+            t.left = add( x, t.left );
+        }
+        else if ( compareCheck > 0 )
+        {
+            t.right = add( x, t.right );
+        }
+        else if ( compareCheck == 0 )
+        {
+            t.items = new Node.ListNode<>( x, t.items );
         }
         return t;
     }
@@ -101,8 +98,43 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         {
             throw new UnderflowException( "Its empty!" );
         }
-        throw new UnsupportedOperationException( "Not supported yet." );
+        else if (root.left ==null)
+        {
+            AnyType rem = root.items.data;
+            if(root.items.next==null)
+            {
+                root = null;
+            }
+            else
+            {
+                root.items = root.items.next;
+            }
+        }
 
+    }
+
+    private AnyType deleteMin( Node<AnyType> t )
+    {
+        if ( t.left == null )//root only
+        {
+            Node.ListNode<AnyType> rem = t.items;
+            if ( rem.next == null )//sinlge link
+            {
+//                t=null;
+                return rem.data;
+            }
+            else //more links
+            {
+                t.items = t.items.next;
+                rem.next = null;
+                return rem.data;
+            }
+
+        }
+        else //root has left
+        {
+            return deleteMin( t.left );
+        }
     }
 
     @Override
@@ -123,8 +155,19 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         {
             throw new UnderflowException( "Its empty!" );
         }
+        return findMin( root );
+    }
 
-        throw new UnsupportedOperationException( "Not supported yet." );
+    private AnyType findMin( Node<AnyType> t )
+    {
+        if ( t.left == null )
+        {
+            return t.items.data;
+        }
+        else
+        {
+            return findMin( t.left );
+        }
     }
 
     @Override
@@ -134,8 +177,19 @@ public class TreeDoubleEndedPriorityQueue<AnyType> implements DoubleEndedPriorit
         {
             throw new UnderflowException( "Its empty!" );
         }
+        return findMax( root );
+    }
 
-        throw new UnsupportedOperationException( "Not supported yet." );
+    private AnyType findMax( Node<AnyType> t )
+    {
+        if ( t.right == null )
+        {
+            return t.items.data;
+        }
+        else
+        {
+            return findMax( t.right );
+        }
     }
 
     @Override
