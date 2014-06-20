@@ -5,10 +5,7 @@
  */
 package cop3530;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -36,8 +33,9 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("[ ");
         toString( root, sb );
+        sb.append( "]" );
         return new String( sb );
     }
 
@@ -288,54 +286,4 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
             }
         }//end of ListNode class
     }//end of Node class
-
-    private static void test1( TreeDoubleEndedPriorityQueue<String> q1 )
-    {
-        q1.add( "Afdc" );
-        q1.add( "fda" );
-        q1.add( "Da" );
-        q1.add( "afdc" );
-        q1.add( "Fda" );
-        q1.add( "Da" );
-        System.out.println( "1 Before - q1: " + q1 );
-        System.out.println( "2 After - q1: " + q1 );
-        q1.deleteMin();
-        System.out.println( "3 After - q1: " + q1 );
-        q1.deleteMin();
-        q1.deleteMin();
-//        q1.deleteMin();
-        q1.deleteMax();
-        System.out.println( "4 After - q1: " + q1 );
-    }
-
-    private static void test2( TreeDoubleEndedPriorityQueue<Integer> q1 )
-    {
-        Random r = new Random( 1 );
-        for ( int i = 0; i < 10; ++i )
-        {
-            q1.add( r.nextInt( 20 ) );
-        }
-
-        System.out.println( "1 Before - q1: " + q1 );
-
-        int num = q1.deleteMin();
-        System.out.println( "Deleted " + num );
-        
-        System.out.println( "2 After - q1: " + q1 );
-        
-        num = q1.deleteMin();
-        System.out.println( "Deleted " + num );
-        
-        System.out.println( "3 After - q1: " + q1 );
-        
-        num = q1.deleteMin();
-        System.out.println( "Deleted " + num );
-        
-        System.out.println( "4 After - q1: " + q1 );
-    }
-
-    public static void main( String[] args )
-    {
-        test2( new TreeDoubleEndedPriorityQueue<>() );
-    }
 }//end of TreeDoubleEndedPriorityQueue class
