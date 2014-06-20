@@ -106,9 +106,7 @@ public class ListDoubleEndedPriorityQueue<AnyType>
         {
             Node<AnyType> p = first.next; //temp pointer
             while ( myCompare( x, p.data ) > 0 ) //traverse list
-            {
                 p = p.next;
-            }
 
             addAfter( p, x );
         }

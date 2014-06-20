@@ -7,7 +7,7 @@
 package cop3530;
 
 /**
- *
+ * DoubleEndedPriorityQueue interface.
  * @author Fernando
  */
 public interface DoubleEndedPriorityQueue<AnyType>

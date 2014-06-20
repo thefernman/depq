@@ -109,18 +109,14 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
     {
         if ( t == null ) //tree is empty, create the first root node.
             return new Node<>( x );
-
         //compare check, negative if less, positive if greater, and 0 if equal.
         int compareCheck = myCompare( x, t.items.data );
-
         //recursive call for left substree. 
         if ( compareCheck < 0 )
             t.left = add( x, t.left );
-
         //recursive call for right substree
         else if ( compareCheck > 0 )
             t.right = add( x, t.right );
-
         //duplicate data, add to node's linked list
         else if ( compareCheck == 0 )
             t.items = new Node.ListNode<>( x, t.items );
@@ -142,7 +138,6 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
     {
         if ( isEmpty() )//empty tree
             throw new UnderflowException( "Its empty!" );
-
         if ( root.left == null ) //root has no left
             if ( !root.hasMoreLinks() )//no duplicates
             {
@@ -152,7 +147,6 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
             }
             else//duplicates found
                 return root.removeLink();
-
         else //root has left
             //recursive call passing root to delete minimum
             return deleteMin( root );
@@ -175,7 +169,6 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
             }
             else//duplicates founds
                 return t.left.removeLink();
-
         else//Node (t.left) has left
             //recursive call passing t.left to find minimum to delete
             return deleteMin( t.left );
@@ -204,7 +197,6 @@ public class TreeDoubleEndedPriorityQueue<AnyType>
             }
             else//duplicates found
                 return root.removeLink();
-
         else //root has right
             //recursive call passing root to delete maximum
             return deleteMax( root );
